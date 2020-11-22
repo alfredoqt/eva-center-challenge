@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import 'App.css';
 import {getImage, downloadFile} from 'utils/images';
 
@@ -12,6 +12,7 @@ async function download() {
 }
 
 function App() {
+  const [stats, setStats] = useState(null);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -19,6 +20,7 @@ function App() {
           'https://fake-img-endpoint.vercel.app/api/data',
         );
         const data = await response.json();
+        setStats(data);
       } catch (e) {
         console.log(e);
       }
@@ -50,6 +52,7 @@ function App() {
           Learn React
         </a>
         <button onClick={download}>Download</button>
+        <p>{stats ? JSON.stringify(stats) : 'Loading stats'}</p>
       </header>
     </div>
   );
