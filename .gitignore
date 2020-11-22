@@ -9,7 +9,8 @@
 /coverage
 
 # production
-/build
+# Uncommenting this as it will live in the repository for hosting
+# /build
 
 # misc
 .DS_Store
