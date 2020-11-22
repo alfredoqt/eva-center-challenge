@@ -1,3 +1,4 @@
+# Tests and builds the React app, and deploys it to Firebase hosting
 name: Build Pipeline
 
 on:
@@ -45,6 +46,16 @@ jobs:
       # Use this instead of npm install. This takes the versions from package-lock.json
       # and prevents updates to it.
       run: npm ci
+    - name: Test code
+      run: npm run test
+      # Not necessary to set CI to true, GitHub Actions now does it by default
     - name: Run React build
       # Builds the React SPA
-      run: npm run build --if-present
+      run: npm run build
+    - name: Deploy to Firebase hosting
+      uses: w9jds/firebase-action@1.5.0
+      with:
+        args: deploy --only hosting
+      env:
+        # Stored in the repository's secrets
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
