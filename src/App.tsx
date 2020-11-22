@@ -1,12 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect} from 'react';
+import logo from 'logo.svg';
+import 'App.css';
 
 function App() {
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(
+          'https://fake-img-endpoint.vercel.app/api/data',
+        );
+        const data = await response.json();
+        console.log(data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    let timer = setInterval(fetchData, 500);
+    // fetchData();
+    // Cleanup function
+    return function () {
+      clearInterval(timer);
+    };
+  }, []);
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img
+          src="https://fake-img-endpoint.vercel.app/api/preview"
+          className="App-logo"
+          alt="logo"
+        />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
