@@ -53,9 +53,8 @@ jobs:
       # Builds the React SPA
       run: npm run build
     - name: Deploy to Firebase hosting
-      uses: w9jds/firebase-action@2.0.0
+      uses: w9jds/firebase-action@master
       with:
         args: deploy --only hosting
       env:
-        # Stored in the repository's secrets
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
