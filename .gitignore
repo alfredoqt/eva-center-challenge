@@ -10,7 +10,7 @@
 
 # production
 # Uncommenting this as it will live in the repository for hosting
-# /build
+/build
 
 # misc
 .DS_Store
