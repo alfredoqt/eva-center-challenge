@@ -1,5 +1,15 @@
 import React, {useEffect} from 'react';
 import 'App.css';
+import {getImage, downloadFile} from 'utils/images';
+
+async function download() {
+  const image = await getImage(
+    'https://fake-img-endpoint.vercel.app/api/preview',
+  );
+  const url = URL.createObjectURL(image);
+  const filename = `${Date.now()}.jpg`;
+  downloadFile(filename, url);
+}
 
 function App() {
   useEffect(() => {
@@ -9,7 +19,6 @@ function App() {
           'https://fake-img-endpoint.vercel.app/api/data',
         );
         const data = await response.json();
-        console.log(data);
       } catch (e) {
         console.log(e);
       }
@@ -40,6 +49,7 @@ function App() {
         >
           Learn React
         </a>
+        <button onClick={download}>Download</button>
       </header>
     </div>
   );
