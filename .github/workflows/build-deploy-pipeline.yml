@@ -1,4 +1,4 @@
-name: Node.js Build Pipeline
+name: Build Pipeline
 
 on:
   # Trigger the pipeline only on pushes to main branch
