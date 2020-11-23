@@ -7,7 +7,7 @@ const MOCK_STATS: TemperatureStats = {
   ambientTemperture: 24.3,
   exteriorTemperature: 20.5,
   patientTemperature: 36.5,
-  risk: 'high',
+  risk: 'low',
 };
 
 describe('TemperatureStatsSummary', () => {
