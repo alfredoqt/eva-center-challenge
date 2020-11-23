@@ -10,7 +10,7 @@ const MOCK_STATS: TemperatureStats = {
   risk: 'high',
 };
 
-test('TemperatureStatsSummary', () => {
+describe('TemperatureStatsSummary', () => {
   afterEach(cleanup);
   it('Renders warning when the risk is high', () => {
     const {queryAllByText} = render(
