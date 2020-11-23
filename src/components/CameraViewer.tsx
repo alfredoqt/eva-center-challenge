@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(2),
     },
   },
+  image: {
+    maxWidth: '100%',
+    height: 'auto',
+  },
 }));
 
 /**
@@ -62,6 +66,7 @@ const CameraViewer: React.FC = () => {
   return (
     <div className={classes.root}>
       <img
+        className={classes.image}
         alt="Patient's Preview"
         src={`${BASE_URL}/preview`}
         onLoad={onLoad}
