@@ -50,6 +50,10 @@ const CameraViewer: React.FC = () => {
   const onDownload = useCallback(async () => {
     try {
       const image = await fetchImage(`${BASE_URL}/preview`);
+      if (image.size === 0) {
+        setImageError('Image could not be downloaded');
+        return;
+      }
       const url = URL.createObjectURL(image);
       let filename;
       if (imageLoadedTimestamp) {
