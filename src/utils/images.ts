@@ -4,7 +4,8 @@
 
 /**
  * Fetches an image as a blob from a URL
- * @param {string} url URL of image to be loaded 
+ * @param {string} url URL of image to be loaded
+ * @returns {Promise<Blob>}
  */
 export function fetchImage(url: string): Promise<Blob> {
   return fetch(url).then((response) => response.blob());
