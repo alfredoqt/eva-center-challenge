@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
  * Loads the image from the camera, and allows it to be downloaded
  */
 const CameraViewer: React.FC = () => {
+  // To know if the image hung after one minute
   const imageTimeoutPending = useTimeout(MINUTES_TO_MS);
   const classes = useStyles();
   const [imageLoadedTimestamp, setImageLoadedTimestamp] = useState<
