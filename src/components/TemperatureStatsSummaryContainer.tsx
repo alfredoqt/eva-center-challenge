@@ -5,6 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TemperatureStatsSummary from 'components/TemperatureStatsSummary';
 
+/**
+ * Container that manages loading and error handling
+ * of TemperatureStatsSummary
+ */
 const TemperatureStatsSummaryContainer: React.FC = () => {
   const [stats, setStats] = useState<TemperatureStats | null>(null);
   const [error, setError] = useState<string | null>(null);

@@ -6,6 +6,9 @@ import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
     width: '100%',
     '& > *': {
       marginBottom: theme.spacing(2),
@@ -17,6 +20,9 @@ type Props = {
   stats: TemperatureStats;
 };
 
+/**
+ * Presents temperature stats
+ */
 const TemperatureStatsSummary: React.FC<Props> = ({stats}: Props) => {
   const classes = useStyles();
   return (

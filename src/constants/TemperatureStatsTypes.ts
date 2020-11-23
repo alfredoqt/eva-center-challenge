@@ -1,3 +1,7 @@
+/**
+ * Defines types for temperature stats
+ */
+
 export type TemperatureRisk = 'low' | 'mid' | 'high';
 
 export type TemperatureStats = {

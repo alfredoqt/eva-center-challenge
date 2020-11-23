@@ -1,3 +1,7 @@
+/**
+ * Utils for API calls
+ */
+
 import {TemperatureStats} from 'constants/TemperatureStatsTypes';
 
 export const BASE_URL = 'https://fake-img-endpoint.vercel.app/api';
