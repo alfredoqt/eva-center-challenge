@@ -49,6 +49,9 @@ const CameraViewer: React.FC = () => {
       const url = URL.createObjectURL(image);
       setImageURL(url);
       setImageLoadedTimestamp(Date.now());
+      if (imageError) {
+        setImageError(null);
+      }
     } catch (e) {
       if (e instanceof Error && e.message === ERROR_CODE_IMAGE_TIMEOUT) {
         setImageError('Image hung for more than one second');
@@ -60,7 +63,6 @@ const CameraViewer: React.FC = () => {
 
   // Called everytime the user tries to re-fetch the camera preview
   useEffect(() => {
-    console.log('hello');
     fetchFromCamera();
   }, [fetchFromCamera, retryCount]);
 
