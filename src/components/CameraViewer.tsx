@@ -1,11 +1,9 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import {fetchImage, downloadFile} from 'utils/images';
 import {BASE_URL} from 'utils/api';
-import useTimeout from 'hooks/useTimeout';
-import {MINUTES_TO_MS} from 'utils/time';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,64 +25,56 @@ const useStyles = makeStyles((theme) => ({
  * Loads the image from the camera, and allows it to be downloaded
  */
 const CameraViewer: React.FC = () => {
-  // To know if the image hung after one minute
-  const imageTimeoutPending = useTimeout(MINUTES_TO_MS);
+  const [imageURL, setImageURL] = useState<string | null>(null);
   const classes = useStyles();
   const [imageLoadedTimestamp, setImageLoadedTimestamp] = useState<
-    string | null
+    number | null
   >(null);
   const [imageError, setImageError] = useState<string | null>(null);
 
-  // Using useCallback here because there might be some re-renders
-  // and this will memoize the function.
-  // Not sure if it will improve performance, but still a good practice
-  const onLoad = useCallback(() => {
-    const loadedAt = Date.now();
-    setImageLoadedTimestamp(new Date(loadedAt).toISOString());
-  }, [setImageLoadedTimestamp]);
-
-  const onError = useCallback(() => {
-    setImageError('Image could not be loaded');
-  }, [setImageError]);
-
-  const onDownload = useCallback(async () => {
-    try {
-      const image = await fetchImage(`${BASE_URL}/preview`);
-      if (image.size === 0) {
+  useEffect(() => {
+    async function fetchFromCamera() {
+      try {
+        const image = await fetchImage(`${BASE_URL}/preview`);
+        if (image.size === 0) {
+          setImageError('Image could not be downloaded');
+          return;
+        }
+        const url = URL.createObjectURL(image);
+        setImageURL(url);
+        setImageLoadedTimestamp(Date.now());
+      } catch {
         setImageError('Image could not be downloaded');
-        return;
       }
-      const url = URL.createObjectURL(image);
+    }
+    fetchFromCamera();
+  }, [setImageError, setImageURL, setImageLoadedTimestamp]);
+
+  const onDownload = useCallback(() => {
+    if (imageURL) {
       let filename;
       if (imageLoadedTimestamp) {
-        filename = `${imageLoadedTimestamp}.jpg`;
+        filename = `${new Date(imageLoadedTimestamp).toISOString()}.jpg`;
       } else {
         filename = `${new Date().toISOString()}.jpg`;
       }
-      downloadFile(filename, url);
-    } catch {
-      setImageError('Image could not be downloaded');
+      downloadFile(filename, imageURL);
     }
-  }, [setImageError, imageLoadedTimestamp]);
+  }, [imageLoadedTimestamp, imageURL]);
 
   return (
     <div className={classes.root}>
-      <img
-        className={classes.image}
-        alt="Patient's Preview"
-        src={`${BASE_URL}/preview`}
-        onLoad={onLoad}
-        onError={onError}
-      />
+      {imageURL ? (
+        <img
+          className={classes.image}
+          alt="Patient's Preview"
+          src={imageURL}
+        />
+      ) : null}
       {imageLoadedTimestamp ? (
-        <Typography>{`Image loaded at: ${imageLoadedTimestamp}`}</Typography>
+        <Typography>{`Image loaded at: ${new Date(imageLoadedTimestamp).toISOString()}`}</Typography>
       ) : null}
       {imageError ? <Typography color="error">{imageError}</Typography> : null}
-      {!imageTimeoutPending && imageLoadedTimestamp === null ? (
-        <Typography color="error">
-          Image didn't load after one minute
-        </Typography>
-      ) : null}
       <Button color="primary" variant="contained" onClick={onDownload}>
         Download Image
       </Button>
