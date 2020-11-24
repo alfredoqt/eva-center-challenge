@@ -49,9 +49,7 @@ const CameraViewer: React.FC = () => {
       const url = URL.createObjectURL(image);
       setImageURL(url);
       setImageLoadedTimestamp(Date.now());
-      if (imageError) {
-        setImageError(null);
-      }
+      setImageError(null);
     } catch (e) {
       if (e instanceof Error && e.message === ERROR_CODE_IMAGE_TIMEOUT) {
         setImageError('Image hung for more than one second');
