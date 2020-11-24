@@ -47,10 +47,10 @@ export function fetchImageWithTimeout(
         reject(error);
       });
   });
-} 
+}
 
 /**
- * Downloads a file asigning a same location URL to an anchor tag as the 
+ * Downloads a file asigning a same location URL to an anchor tag as the
  * href parameter, and assigns a filename to the download parameter
  * @param {string} filename To be given to downloaded file
  * @param {string} url URL of the file, might be a Blob URL

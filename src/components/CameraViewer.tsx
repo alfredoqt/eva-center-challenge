@@ -58,7 +58,9 @@ const CameraViewer: React.FC = () => {
     }
   }, [setImageError, setImageURL, setImageLoadedTimestamp]);
 
+  // Called everytime the user tries to re-fetch the camera preview
   useEffect(() => {
+    console.log('hello');
     fetchFromCamera();
   }, [fetchFromCamera, retryCount]);
 
