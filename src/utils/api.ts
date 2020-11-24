@@ -6,6 +6,12 @@ import {TemperatureStats} from 'constants/TemperatureStatsTypes';
 
 export const BASE_URL = 'https://fake-img-endpoint.vercel.app/api';
 
+/**
+ * Fetches JSON data using window.fetch
+ * @param {RequestInfo} requestInfo request info passed to fetch
+ * @param {RequestInit} [init] options passed to fetch
+ * @returns {Promise<T>}
+ */
 export async function fetchGetJson<T>(
   input: RequestInfo,
   init?: RequestInit,
@@ -19,6 +25,10 @@ export async function fetchGetJson<T>(
   throw new Error('Error fetching');
 }
 
+/**
+ * Fetches temperature stats
+ * @returns {Promise<TemperatureStats>}
+ */
 export function fetchStats(): Promise<TemperatureStats> {
   return fetchGetJson(`${BASE_URL}/data`);
 }
